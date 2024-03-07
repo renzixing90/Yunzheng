@@ -34,6 +34,7 @@ public class UserService {
         sqlSession.close();
         return user;
     }
+
     public boolean updatePassword(String account,String newPassword) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
@@ -65,5 +66,22 @@ public class UserService {
 
         return u == null;
 
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     */
+    public void updateAll(User user) {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        mapper.updateAll(user);
+
+        sqlSession.commit();
+        sqlSession.close();
     }
 }

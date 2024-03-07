@@ -15,7 +15,6 @@ public class LeaveRequestService {
 
     /**
      * 添加一个新的假条请求
-     *
      * @param leaveRequest
      */
     public void addNeoLeaveRequest(LeaveRequest leaveRequest) {
@@ -32,7 +31,6 @@ public class LeaveRequestService {
 
     /**
      * 根据假条id获取假条
-     *
      * @param leaveRequestId
      * @return
      */
@@ -51,7 +49,6 @@ public class LeaveRequestService {
 
     /**
      * 根据总管方向获取该方向的所有假条
-     *
      * @param manager
      * @return
      */
@@ -61,7 +58,7 @@ public class LeaveRequestService {
         // LeaveRequestMapper
         LeaveRequestMapper mapper = sqlSession.getMapper(LeaveRequestMapper.class);
 
-        List<LeaveRequest> leaveRequests = mapper.selectAllByApplicantDirection(manager);
+        List<LeaveRequest> leaveRequests= mapper.selectAllByApplicantDirection(manager);
 
         sqlSession.close();
 
@@ -70,10 +67,9 @@ public class LeaveRequestService {
 
     /**
      * 总管审批后将审批结果存储在数据库中
-     *
      * @param leaveRequest
      */
-    public void UpdateLeaveRequestApproval(LeaveRequest leaveRequest) {
+    public void UpdateLeaveRequestApproval(LeaveRequest leaveRequest){
         // 获取SqlSession
         SqlSession sqlSession = factory.openSession();
         // LeaveRequestMapper

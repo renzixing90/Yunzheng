@@ -14,6 +14,4 @@ public interface LeaveRequestMapper {
     List<LeaveRequest> selectAllByApplicantDirection(User manager);
 
     void UpdateLeaveRequestApproval(LeaveRequest leaveRequest);
-
-
 }

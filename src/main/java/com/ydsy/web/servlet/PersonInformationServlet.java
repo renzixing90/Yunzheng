@@ -1,11 +1,8 @@
 package com.ydsy.web.servlet;
 
 import com.alibaba.fastjson.JSON;
-import com.ydsy.pojo.LeaveRequest;
 import com.ydsy.pojo.User;
-import com.ydsy.service.impl.LeaveRequestService;
 import com.ydsy.util.BasicResultVO;
-import com.ydsy.util.PojoReceiveRequestDataUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/selectAllLeaveRequestServlet")
-public class SelectAllLeaveRequestServlet extends HttpServlet {
-
-    private final LeaveRequestService leaveRequestService = new LeaveRequestService();
-
+@WebServlet("/personInformationServlet")
+public class PersonInformationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,19 +21,13 @@ public class SelectAllLeaveRequestServlet extends HttpServlet {
          * 获取session中的user数据
          */
         HttpSession session = request.getSession();
-        User manager = (User) session.getAttribute("user");
-
-        /**
-         * 获取本方向的所有未审批的假条数据
-         */
-        List<LeaveRequest> leaveRequests = leaveRequestService.selectAllByApplicantDirection(manager);
+        User user = (User) session.getAttribute("user");
 
         /**
          * 向前端返回成功码和未审批的所有假条数据
          */
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查看总假条成功",leaveRequests)));
-
+        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查询个人信息成功", user)));
     }
 
     @Override

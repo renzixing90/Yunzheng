@@ -1,6 +1,7 @@
 package com.ydsy.util;
 
 import com.alibaba.fastjson.JSON;
+import com.ydsy.pojo.LeaveRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
