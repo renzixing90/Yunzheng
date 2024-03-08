@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("selectStudentFromAccountByBigManagerServlet")
+@WebServlet("/selectStudentFromAccountByBigManagerServlet")
 public class SelectStudentFromAccountByBigManagerServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -23,20 +23,20 @@ public class SelectStudentFromAccountByBigManagerServlet extends HttpServlet {
         /**
          * 获取账号
          */
-        String account = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, String.class);
+        User user = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, User.class);
 
         /**
          * 查看这个账号是否存在
          */
-        User user = userService.verifyUser(account);
+        User user01 = userService.verifyUser(user.getAccount());
 
-        if (user == null) {
+        if (user01 == null) {
             /**
              * 向前端返回错误
              */
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("没有此用户")));
-        } else if (user.getJobId() == 3) {
+        } else if (user01.getJobId() == 3) {
             /**
              * 向前端返回错误
              */

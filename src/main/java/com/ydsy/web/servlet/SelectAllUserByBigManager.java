@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/SelectAllUserByBigManager")
+@WebServlet("/selectAllUserByBigManager")
 public class SelectAllUserByBigManager extends HttpServlet {
 
     private final UserService userService = new UserService();

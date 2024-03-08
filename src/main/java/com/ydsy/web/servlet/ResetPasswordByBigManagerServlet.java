@@ -1,6 +1,7 @@
 package com.ydsy.web.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.ydsy.pojo.User;
 import com.ydsy.service.impl.UserService;
 import com.ydsy.util.BasicResultVO;
 import com.ydsy.util.PojoReceiveRequestDataUtil;
@@ -22,12 +23,12 @@ public class ResetPasswordByBigManagerServlet extends HttpServlet {
         /**
          * 获取要重置密码的账号
          */
-        int userId = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, Integer.class);
+        User user = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, User.class);
 
         /**
          * 重置密码为123456
          */
-        userService.resetPassword(userId);
+        userService.resetPassword(user.getUserId());
 
         /**
          * 向前端返回更新后的用户数据
