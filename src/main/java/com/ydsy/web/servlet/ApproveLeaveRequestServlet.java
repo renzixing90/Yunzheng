@@ -6,6 +6,7 @@ import com.ydsy.pojo.Participation;
 import com.ydsy.pojo.User;
 import com.ydsy.service.impl.LeaveRequestService;
 import com.ydsy.service.impl.ParticipationService;
+import com.ydsy.service.impl.UserService;
 import com.ydsy.util.BasicResultVO;
 import com.ydsy.util.PojoReceiveRequestDataUtil;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
 @WebServlet("/approveLeaveRequestServlet")
 public class ApproveLeaveRequestServlet extends HttpServlet {
 
+    private final UserService userService = new UserService();
     private final LeaveRequestService leaveRequestService = new LeaveRequestService();
     private final ParticipationService participationService = new ParticipationService();
 
@@ -28,8 +30,10 @@ public class ApproveLeaveRequestServlet extends HttpServlet {
         /**
          * 获取session中的user数据
          */
-        HttpSession session = request.getSession();
-        User manager = (User) session.getAttribute("user");
+        //HttpSession session = request.getSession();
+        //User manager = (User) session.getAttribute("user");
+
+        User manager = userService.verifyUser("2023002222");
 
         /**
          * 将审批数据存储在pojo中
@@ -71,7 +75,7 @@ public class ApproveLeaveRequestServlet extends HttpServlet {
         /**
          * 重定向回查询总假条页面
          */
-        response.sendRedirect(request.getContextPath() + "/selectAllLeaveRequestServlet");
+        //response.sendRedirect(request.getContextPath() + "/selectAllLeaveRequestServlet");
     }
 
     @Override

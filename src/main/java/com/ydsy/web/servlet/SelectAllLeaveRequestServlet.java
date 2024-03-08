@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ydsy.pojo.LeaveRequest;
 import com.ydsy.pojo.User;
 import com.ydsy.service.impl.LeaveRequestService;
+import com.ydsy.service.impl.UserService;
 import com.ydsy.util.BasicResultVO;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import java.util.List;
 @WebServlet("/selectAllLeaveRequestServlet")
 public class SelectAllLeaveRequestServlet extends HttpServlet {
 
+    private final UserService userService = new UserService();
     private final LeaveRequestService leaveRequestService = new LeaveRequestService();
 
     @Override
@@ -26,8 +28,10 @@ public class SelectAllLeaveRequestServlet extends HttpServlet {
         /**
          * 获取session中的user数据
          */
-        HttpSession session = request.getSession();
-        User manager = (User) session.getAttribute("user");
+        //HttpSession session = request.getSession();
+        //User manager = (User) session.getAttribute("user");
+
+        User manager = userService.verifyUser("2023002222");
 
         /**
          * 获取本方向的所有未审批的假条数据

@@ -34,8 +34,8 @@
           and applicant_id in
               (select user_id
                from users
-               where job_id = (select job_id from jobs where job_name = '学员')
-                 and direction_id = (select direction_id from users where direction_id = #{directionId}));
+               where job_id = 1
+                 and direction_id = #{directionId});
     </select>
 
     <update id="UpdateLeaveRequestApproval">

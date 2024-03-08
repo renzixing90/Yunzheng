@@ -124,4 +124,17 @@ public class UserService {
         sqlSession.commit();
         sqlSession.close();
     }
+
+    public List<User> selectAllStuByDirection(int directionId){
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        List<User> students = mapper.selectAllStuByDirection(directionId);
+
+        sqlSession.close();
+
+        return students;
+    }
 }

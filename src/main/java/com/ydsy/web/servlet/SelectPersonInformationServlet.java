@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/selectBigManagerInformationServlet")
-public class SelectBigManagerInformationServlet extends HttpServlet {
+@WebServlet("/selectPersonInformationServlet")
+public class SelectPersonInformationServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
 
@@ -24,14 +24,14 @@ public class SelectBigManagerInformationServlet extends HttpServlet {
          * 获取session中的user数据
          */
         /*HttpSession session = request.getSession();
-        User bigManager = (User) session.getAttribute("user");*/
-        User bigManager = userService.verifyUser("2023003333");
+        User user = (User) session.getAttribute("user");*/
+        User user = userService.verifyUser("2023003333");
 
         /**
-         * 向前端返回大总管数据
+         * 向前端返回个人数据
          */
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查看大总管个人信息成功", bigManager)));
+        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查看大总管个人信息成功", user)));
     }
 
     @Override

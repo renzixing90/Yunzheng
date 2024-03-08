@@ -72,5 +72,11 @@
         from management.users
         where account = #{account};
     </select>
+    <select id="selectAllStuByDirection" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from users
+        where direction_id = #{directionId}
+          and job_id = 1;
+    </select>
 
 </mapper>
