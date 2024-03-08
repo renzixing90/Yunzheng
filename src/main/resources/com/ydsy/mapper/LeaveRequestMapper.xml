@@ -17,7 +17,7 @@
     <insert id="InsertNeoLeaveRequest">
 
         INSERT INTO leave_requests (applicant_id, leave_request_meeting, leave_request_reason)
-        VALUES (#{applicantId}, #{leaveRequestTime}, #{leaveRequestReason});
+        VALUES (#{applicantId}, #{leaveRequestMeeting}, #{leaveRequestReason});
     </insert>
 
     <select id="selectByLeaveRequestId" resultType="com.ydsy.pojo.LeaveRequest" resultMap="leaveRequestsResultMap">

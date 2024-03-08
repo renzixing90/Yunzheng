@@ -75,7 +75,7 @@ public final class BasicResultVO<T> {
     }
 
     public static <T> BasicResultVO<T> success(String msg, T data) {
-        return new BasicResultVO<>(RespStatusEnum.SUCCESS, data);
+        return new BasicResultVO<>(RespStatusEnum.SUCCESS, msg, data);
     }
 
     /**
@@ -83,9 +83,9 @@ public final class BasicResultVO<T> {
      */
     public static <T> BasicResultVO<T> fail() {
         return new BasicResultVO<>(
-                RespStatusEnum.FAIL,
-                RespStatusEnum.FAIL.getMsg(),
-                null
+            RespStatusEnum.FAIL,
+            RespStatusEnum.FAIL.getMsg(),
+            null
         );
     }
 

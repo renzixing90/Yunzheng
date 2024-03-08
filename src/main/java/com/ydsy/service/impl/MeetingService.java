@@ -1,6 +1,7 @@
 package com.ydsy.service.impl;
 
 import com.ydsy.mapper.MeetingMapper;
+import com.ydsy.pojo.Meeting;
 import com.ydsy.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,9 +14,10 @@ public class MeetingService {
 
     /**
      * 获取所有会议id
+     *
      * @return
      */
-    public List<Integer> selectAllMeetingId(){
+    public List<Integer> selectAllMeetingId() {
         // 获取SqlSession
         SqlSession sqlSession = factory.openSession();
         // MeetingMapper
@@ -28,4 +30,16 @@ public class MeetingService {
         return meetingIds;
     }
 
+    public List<Meeting> selectAll() {
+        // 获取SqlSession
+        SqlSession sqlSession = factory.openSession();
+        // MeetingMapper
+        MeetingMapper mapper = sqlSession.getMapper(MeetingMapper.class);
+
+        List<Meeting> meetings = mapper.selectAll();
+
+        sqlSession.close();
+
+        return meetings;
+    }
 }

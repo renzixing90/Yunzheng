@@ -14,7 +14,46 @@
 
     <update id="updateAll">
         update users
-        set direction_id = #{directionId}
+        <set>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="jobId != null and jobId != ''">
+                job_id = #{jobId},
+            </if>
+            <if test="awards != null and awards != ''">
+                awards = #{awards},
+            </if>
+            <if test="personalSignature != null and personalSignature != ''">
+                personal_signature = #{personalSignature},
+            </if>
+            <if test="studentId != null and studentId != ''">
+                student_id = #{studentId},
+            </if>
+            <if test="majorClass != null and majorClass != ''">
+                major_class = #{majorClass},
+            </if>
+            <if test="stage != null and stage != ''">
+                stage = #{stage},
+            </if>
+            <if test="directionId != null and directionId != ''">
+                direction_id = #{directionId},
+            </if>
+            where user_id = #{userId};
+        </set>
+    </update>
+    <update id="resetPassword">
+        update users
+        set password = '123456'
         where user_id = #{userId};
     </update>
 
@@ -27,6 +66,11 @@
         select *
         from users
         where user_id = #{userId};
+    </select>
+    <select id="selectByAccount" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from management.users
+        where account = #{account};
     </select>
 
 </mapper>

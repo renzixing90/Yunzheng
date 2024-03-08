@@ -39,14 +39,14 @@ public class ForgetPasswordServlet extends HttpServlet {
 
         // 存储新密码到数据库或缓存中，以便用户下次登录时验证
         boolean updatePassword = service.updatePassword(account, newPassword);
-        if(updatePassword){
-            if(Objects.equals(password, newPassword)){
+        if (updatePassword) {
+            if (Objects.equals(password, newPassword)) {
                 // 向用户返回成功消息
                 response.setContentType("application/json;charset=utf-8");
                 // 返回成功的 JSON 响应
                 response.getWriter().write(JSON.toJSONString(BasicResultVO.success("修改密码成功")));
             }
-        }else{
+        } else {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("修改密码失败")));
         }

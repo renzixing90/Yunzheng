@@ -6,16 +6,19 @@ import com.ydsy.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
+
 public class UserService {
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     /**
-     *登陆方法
+     * 登陆方法
+     *
      * @param account
      * @param password
      * @return
      */
-    public User login(String account,String password){
+    public User login(String account, String password) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         User user = mapper.select(account, password);
@@ -23,11 +26,12 @@ public class UserService {
         return user;
     }
     /**
-     *查询方法
+     * 查询方法
+     *
      * @param account
      * @return
      */
-    public User verifyUser(String account){
+    public User verifyUser(String account) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         User user = mapper.selectByAccount(account);
@@ -35,7 +39,7 @@ public class UserService {
         return user;
     }
 
-    public boolean updatePassword(String account,String newPassword) {
+    public boolean updatePassword(String account, String newPassword) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         User user = mapper.updatePassword(account, newPassword);
@@ -45,10 +49,11 @@ public class UserService {
 
     /**
      * 注册方法
+     *
      * @return
      */
 
-    public boolean register(User user){
+    public boolean register(User user) {
         //2. 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //3. 获取UserMapper
@@ -57,7 +62,7 @@ public class UserService {
         //4. 判断用户名是否存在
         User u = mapper.selectByAccount(user.getAccount());
 
-        if(u == null){
+        if (u == null) {
             // 用户名不存在，注册
             mapper.add(user);
             sqlSession.commit();
@@ -80,6 +85,41 @@ public class UserService {
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         mapper.updateAll(user);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    /**
+     * 获得所有用户对象
+     *
+     * @return
+     */
+    public List<User> selectAll() {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        List<User> users = mapper.selectAll();
+
+        sqlSession.close();
+
+        return users;
+    }
+
+    /**
+     * 充值密码
+     *
+     * @param userId
+     */
+    public void resetPassword(int userId) {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        mapper.resetPassword(userId);
 
         sqlSession.commit();
         sqlSession.close();

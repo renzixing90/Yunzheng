@@ -2,11 +2,13 @@ package com.ydsy.web.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.ydsy.pojo.LeaveRequest;
+import com.ydsy.pojo.Meeting;
 import com.ydsy.pojo.Participation;
 import com.ydsy.pojo.User;
 import com.ydsy.service.impl.LeaveRequestService;
 import com.ydsy.service.impl.MeetingService;
 import com.ydsy.service.impl.ParticipationService;
+import com.ydsy.service.impl.UserService;
 import com.ydsy.util.BasicResultVO;
 import com.ydsy.util.PojoReceiveRequestDataUtil;
 
@@ -15,12 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/leaveRequestServlet")
 public class LeaveRequestServlet extends HttpServlet {
 
+    private final UserService userService = new UserService();
     private final MeetingService meetingService = new MeetingService();
     private final LeaveRequestService leaveRequestService = new LeaveRequestService();
     private final ParticipationService participationService = new ParticipationService();
@@ -32,12 +35,14 @@ public class LeaveRequestServlet extends HttpServlet {
          * 使用自定的工具类接收数据保存到对应的pojo类中
          */
         LeaveRequest leaveRequest = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, LeaveRequest.class);
+        System.out.println(leaveRequest);
 
         /**
          * 获取session中的user数据
          */
-        HttpSession session = request.getSession();
-        User student = (User) session.getAttribute("user");
+        //HttpSession session = request.getSession();
+        //User student = (User) session.getAttribute("user");
+        User student = userService.verifyUser("2023004333");
 
         /**
          * 假条中的申请人数据存储
@@ -45,17 +50,25 @@ public class LeaveRequestServlet extends HttpServlet {
         leaveRequest.setApplicantId(student.getUserId());
 
         int leaveRequestMeeting = leaveRequest.getLeaveRequestMeeting();
-        String leaveRequestReason = String.valueOf(leaveRequest.getLeaveRequestMeeting());
+        String leaveRequestReason = leaveRequest.getLeaveRequestReason();
 
         /**
          * 判断会议id存不存在
          */
-        if (!meetingService.selectAllMeetingId().contains(leaveRequestMeeting)) {
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("会议id不存在")));
-            response.sendRedirect(request.getRequestURI());
-            return;
+
+        int meetingSelect = 0;
+        List<Meeting> meetings = meetingService.selectAll();
+        for (Meeting meeting : meetings) {
+            if (meeting.getMeetingId() == leaveRequestMeeting) {
+                meetingSelect = 1;
+                break;
+            }
         }
+        if (meetingSelect == 0) {
+            response.setContentType("application/json;charset=utf-8");
+            response.getWriter().write(JSON.toJSONString(BasicResultVO.success("会议不存在", -1)));
+        }
+
 
         /**
          * 判断此假条是否已经申请过
