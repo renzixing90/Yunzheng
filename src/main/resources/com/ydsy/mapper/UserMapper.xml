@@ -48,8 +48,8 @@
             <if test="directionId != null and directionId != ''">
                 direction_id = #{directionId},
             </if>
-            where user_id = #{userId};
         </set>
+        where user_id = #{userId};
     </update>
     <update id="resetPassword">
         update users
@@ -82,6 +82,11 @@
         select *
         from users
         where name = #{name}
+    </select>
+    <select id="selectMaxUser" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from management.users
+        where user_id = (select max(user_id) from users);
     </select>
 
 </mapper>

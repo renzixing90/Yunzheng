@@ -37,7 +37,6 @@ public class SelectAllLeaveRequestServlet extends HttpServlet {
          */
         List<LeaveRequest> leaveRequests = leaveRequestService.selectAllByApplicantDirection(manager);
 
-
         /**
          * 向前端返回成功码和未审批的所有假条数据
          */

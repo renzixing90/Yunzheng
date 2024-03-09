@@ -16,6 +16,7 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     private UserService service = new UserService();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 设置响应内容类型为 JSON
@@ -26,24 +27,32 @@ public class RegisterServlet extends HttpServlet {
         String jsonString = reader.readLine();
         // 使用 JSON 库解析 JSON 数据为 User 对象
         User user = JSON.parseObject(jsonString, User.class);*/
+
         User user = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, User.class);
 
-        if(user != null){
 
-        // 调用 service 查询
-        boolean registerUser = service.register(user);
-        if(registerUser){
-            // 向用户返回成功消息
-            response.setContentType("application/json;charset=utf-8");
-            // 返回成功的 JSON 响应
-            response.getWriter().write(JSON.toJSONString(BasicResultVO.success("注册成功")));
-        }else{
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("注册失败，请重试")));
-        }}else{
+        if (user != null) {
+
+            // 调用 service 查询
+            boolean registerUser = service.register(user);
+            if (registerUser) {
+                // 向用户返回成功消息
+                response.setContentType("application/json;charset=utf-8");
+                // 返回成功的 JSON 响应
+                response.getWriter().write(JSON.toJSONString(BasicResultVO.success("注册成功")));
+
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+            } else {
+                response.setContentType("application/json;charset=utf-8");
+                response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("注册失败，请重试")));
+            }
+        } else {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("未接收到数据，请重试")));
         }
+
+
     }
 
     @Override

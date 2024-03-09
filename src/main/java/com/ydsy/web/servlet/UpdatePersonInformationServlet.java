@@ -11,38 +11,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/selectAllPersonInformationServlet")
-public class SelectAllPersonInformationServlet extends HttpServlet {
+@WebServlet("/updatePersonInformationServlet")
+public class UpdatePersonInformationServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /**
-         * 获取更新后的大总管数据
+         * 获取修改后的用户
          */
-        User updateBigManager = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, User.class);
+        User user = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, User.class);
 
         /**
-         * 更新数据库
+         * 更新用户
          */
-        userService.updateAll(updateBigManager);
+        userService.updateAll(user);
 
         /**
-         * 更新session中的user数据
-         */
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        session.setAttribute("user", updateBigManager);
-
-        /**
-         * 向前端返回更新后的大总管数据
+         * 向前端返回更新后的用户数据
          */
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("更新大总管个人信息成功", updateBigManager)));
+        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("更新个人信息成功", user)));
     }
 
     @Override

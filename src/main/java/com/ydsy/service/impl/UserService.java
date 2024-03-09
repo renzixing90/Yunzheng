@@ -38,12 +38,12 @@ public class UserService {
         sqlSession.close();
         return user;
     }
-    public boolean updatePassword(String account, String setPassword) {
+    public int updatePassword(String account, String setPassword) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user = mapper.updatePassword(account, setPassword);
+        int i = mapper.updatePassword(account, setPassword);
         sqlSession.commit();
-        return user != null;
+        return i;
     }
 
     /**
@@ -141,4 +141,18 @@ public class UserService {
 
         return users;
     }
+
+    public User selectMaxUser(){
+        //2. 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        //3. 获取UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = mapper.selectMaxUser();
+
+        sqlSession.close();
+
+        return user;
+    }
+
 }

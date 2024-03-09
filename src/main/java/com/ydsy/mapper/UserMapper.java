@@ -44,14 +44,14 @@ public interface UserMapper {
      * @param user
      */
     @Insert("insert into management.users (account, password, email, name, awards, personal_signature, student_id, major_class, stage, check_code)" +
-            " values(#{account},#{password},#{email},null,null,null,null,null,null,#{checkCode})")
+        " values(#{account},#{password},#{email},null,null,null,null,null,null,#{checkCode})")
     void add(User user);
 
     @Select("select * from management.users where user_id = #{userId}")
     User selectByUserId(int userId);
 
-    @Update("update management.users  set password = #{setPassword}  WHERE account = #{account};")
-    User updatePassword(String account, String setPassword);
+    @Update("update management.users  set password = #{password}  WHERE account = #{account};")
+    int updatePassword(@Param("account") String account, @Param("password") String password);
 
     void updateAll(User user);
 
@@ -62,4 +62,7 @@ public interface UserMapper {
     List<User> selectAllStuByDirection(int directionId);
 
     User selectByName(String name);
+
+    User selectMaxUser();
+
 }

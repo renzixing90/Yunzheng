@@ -1,9 +1,12 @@
 package com.ydsy.web.filter;
 
+import com.ydsy.pojo.User;
+import com.ydsy.util.JobEnum;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter("")
@@ -21,46 +24,42 @@ public class LoginFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
-
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "*");
-        resp.setHeader("Access-Control-Max-Age", "4200");
-        resp.setHeader("Access-Control-Allow-Headers", "*");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
-
-        chain.doFilter(request, response);
-
-        return;
 
         /**
          * 对所有人都不拦截的网址
-         String[] urls = {"/imgs/", "/css/", "/loginServlet", "/registerServlet", "index.jsp"};
-         String url = req.getRequestURL().toString();
-         for (String u : urls) {
-         if (url.contains(u)) {
-         chain.doFilter(request, response);
-         return;
-         }
-         }
+         */
+        String[] urls = {"/imgs/", "/css/", "/js/", "/loginServlet", "/registerServlet", "/forgetPasswordServlet",
+        "/personInformationServlet","/selectPersonInformationServlet","updatePersonInformationServlet",
+        "/checkCodeServlet","/updateProfileServlet"};
+        String url = req.getRequestURL().toString();
+        for (String u : urls) {
+            if (url.contains(u)) {
+                chain.doFilter(request, response);
+                return;
+            }
+        }
 
-         HttpSession session = req.getSession();
-         User user = (User) session.getAttribute("user");
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
 
-         *//**
+        /**
          * 对学生端不拦截的网址
-         *//*
-        String[] studentUrls = {"/leaveRequestServlet"};
-        *//**
+         */
+        String[] studentUrls = {"/leaveRequestServlet", "/directionRequestServlet", "/forgetPasswordServlet",
+            "/selectAllAnnouncementByDirectionServlet"};
+        /**
          * 对管理端不拦截的网址
-         *//*
-        String[] managerUrls = {"/selectAllLeaveRequestServlet", "/approveLeaveRequestServlet"};
-        *//**
+         */
+        String[] managerUrls = {"/selectAllLeaveRequestServlet", "/approveLeaveRequestServlet",
+            "/approveDirectionRequestServlet","/selectAllAnnouncementByDirectionServlet","/selectAllDirectionRequestServlet",
+            "/selectAllStudentByManager",""
+        };
+        /**
          * 对大总管不拦截的网址
-         *//*
-        String[] bigManagerUrls = {};
+         */
+        String[] bigManagerUrls = {"/issueAnnouncementServlet", "/registerServlet","/selectAllJobApplicationServlet",
+            "/selectAllUserByBigManager","/selectStudentFromAccountByBigManagerServlet","updateUserInfoByBigManagerServlet"};
 
         if (user != null) {
             if (user.getJobId() == JobEnum.JOB_STUDENT.getJobId()) {
@@ -87,13 +86,13 @@ public class LoginFilter implements Filter {
             }
         }
 
-        *//**
+        /**
          * 没有登录, 返回登录界面
-         *//*
+         */
         else {
             req.setAttribute("login_msg", "您尚未登录");
             req.getRequestDispatcher("/login.jsp").forward(request, response);
-        }*/
+        }
     }
 
     public void init(FilterConfig config) throws ServletException {
