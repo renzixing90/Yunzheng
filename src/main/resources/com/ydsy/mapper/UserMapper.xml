@@ -78,5 +78,10 @@
         where direction_id = #{directionId}
           and job_id = 1;
     </select>
+    <select id="selectByName" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from users
+        where name = #{name}
+    </select>
 
 </mapper>

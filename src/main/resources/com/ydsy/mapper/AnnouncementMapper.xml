@@ -9,10 +9,19 @@
         <result column="announcement_content" property="announcementContent"/>
         <result column=" created_at" property="createdAt"/>
     </resultMap>
+    <insert id="insertAll">
+        insert into announcements(creator_id, announcement_content)
+        values (#{creatorId}, #{announcementContent});
+    </insert>
 
-    <select id="selectAll" resultMap="announcementsResultMap">
+    <select id="selectAll" resultType="com.ydsy.pojo.Announcement" resultMap="announcementsResultMap">
         select *
         from announcements;
+    </select>
+    <select id="selectByLocalDirection" resultType="com.ydsy.pojo.Announcement" resultMap="announcementsResultMap">
+        select *
+        from announcements
+        where creator_id in (select user_id from users where direction_id = #{directionId});
     </select>
 
 </mapper>

@@ -137,4 +137,17 @@ public class UserService {
 
         return students;
     }
+
+    public User selectByName(String name) {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = mapper.selectByName(name);
+
+        sqlSession.close();
+
+        return user;
+    }
 }

@@ -1,29 +1,30 @@
 package com.ydsy.web.servlet;
 
 import com.alibaba.fastjson.JSON;
-import com.ydsy.pojo.LeaveRequest;
+import com.ydsy.pojo.Announcement;
 import com.ydsy.pojo.User;
-import com.ydsy.service.impl.LeaveRequestService;
+import com.ydsy.service.impl.AnnouncementService;
 import com.ydsy.service.impl.UserService;
 import com.ydsy.util.BasicResultVO;
+import com.ydsy.util.PojoReceiveRequestDataUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/selectAllLeaveRequestServlet")
-public class SelectAllLeaveRequestServlet extends HttpServlet {
+@WebServlet("/issueAnnouncementServlet")
+public class IssueAnnouncementServlet extends HttpServlet {
 
+    private final AnnouncementService announcementService = new AnnouncementService();
     private final UserService userService = new UserService();
-    private final LeaveRequestService leaveRequestService = new LeaveRequestService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Announcement announcement = PojoReceiveRequestDataUtil.pojoReceiveRequestDataUtil(request, Announcement.class);
 
         /**
          * 获取session中的user数据
@@ -32,17 +33,12 @@ public class SelectAllLeaveRequestServlet extends HttpServlet {
         //User manager = (User) session.getAttribute("user");
         User manager = userService.verifyUser("2023002222");
 
-        /**
-         * 获取本方向的所有未审批的假条数据
-         */
-        List<LeaveRequest> leaveRequests = leaveRequestService.selectAllByApplicantDirection(manager);
+        announcement.setCreatorId(manager.getUserId());
 
-        /**
-         * 向前端返回成功码和未审批的所有假条数据
-         */
+        announcementService.insertAll(announcement);
+
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查看总假条成功", leaveRequests)));
-
+        response.getWriter().write(JSON.toJSONString(BasicResultVO.success("下发通知成功", announcement)));
     }
 
     @Override

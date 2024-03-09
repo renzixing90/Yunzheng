@@ -59,4 +59,6 @@ public interface UserMapper {
     void resetPassword(int userId);
 
     List<User> selectAllStuByDirection(int directionId);
+
+    User selectByName(String name);
 }

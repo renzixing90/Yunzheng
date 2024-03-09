@@ -28,7 +28,7 @@ public class SelectStudentFromAccountByBigManagerServlet extends HttpServlet {
         /**
          * 查看这个账号是否存在
          */
-        User user01 = userService.verifyUser(user.getAccount());
+        User user01 = userService.selectByName(user.getName());
 
         if (user01 == null) {
             /**
