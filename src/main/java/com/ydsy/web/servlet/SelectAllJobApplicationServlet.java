@@ -11,7 +11,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/SelectAllJobApplicationServlet")
+@WebServlet("/selectAllJobApplicationServlet")
 public class SelectAllJobApplicationServlet extends HttpServlet {
 
     private final JobApplicationService jobApplicationService = new JobApplicationService();

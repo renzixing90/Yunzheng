@@ -38,11 +38,10 @@ public class UserService {
         sqlSession.close();
         return user;
     }
-
-    public boolean updatePassword(String account, String newPassword) {
+    public boolean updatePassword(String account, String setPassword) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user = mapper.updatePassword(account, newPassword);
+        User user = mapper.updatePassword(account, setPassword);
         sqlSession.commit();
         return user != null;
     }
@@ -61,51 +60,19 @@ public class UserService {
 
         //4. 判断用户名是否存在
         User u = mapper.selectByAccount(user.getAccount());
-
+        User s = mapper.selectByEmail(user.getEmail());
+        boolean flag = false;
         if (u == null) {
-            // 用户名不存在，注册
-            mapper.add(user);
-            sqlSession.commit();
+            if (s == null) {
+                // 用户名不存在，注册
+                mapper.add(user);
+                sqlSession.commit();
+                flag = true;
+            }
         }
         sqlSession.close();
 
-        return u == null;
-
-    }
-
-    /**
-     * 更新用户信息
-     *
-     * @param user
-     */
-    public void updateAll(User user) {
-        // 获取SqlSession
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        // UserMapper
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-
-        mapper.updateAll(user);
-
-        sqlSession.commit();
-        sqlSession.close();
-    }
-
-    /**
-     * 获得所有用户对象
-     *
-     * @return
-     */
-    public List<User> selectAll() {
-        // 获取SqlSession
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        // UserMapper
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-
-        List<User> users = mapper.selectAll();
-
-        sqlSession.close();
-
-        return users;
+        return flag;
     }
 
     /**
@@ -125,7 +92,7 @@ public class UserService {
         sqlSession.close();
     }
 
-    public List<User> selectAllStuByDirection(int directionId){
+    public List<User> selectAllStuByDirection(int directionId) {
         // 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         // UserMapper
@@ -149,5 +116,29 @@ public class UserService {
         sqlSession.close();
 
         return user;
+    }
+    public void updateAll(User user) {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        mapper.updateAll(user);
+
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+    public List<User> selectAll() {
+        // 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        List<User> users = mapper.selectAll();
+
+        sqlSession.close();
+
+        return users;
     }
 }

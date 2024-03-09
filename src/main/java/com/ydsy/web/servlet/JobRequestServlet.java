@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/JobRequestServlet")
+@WebServlet("/jobRequestServlet")
 public class JobRequestServlet extends HttpServlet {
 
     private final UserService userService = new UserService();

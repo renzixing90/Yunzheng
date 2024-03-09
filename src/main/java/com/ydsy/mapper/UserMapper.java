@@ -43,14 +43,15 @@ public interface UserMapper {
      *
      * @param user
      */
-    @Insert("insert into management.users values(null,#{account},#{password},#{email},null,null,null,null,null,null,null,null)")
+    @Insert("insert into management.users (account, password, email, name, awards, personal_signature, student_id, major_class, stage, check_code)" +
+            " values(#{account},#{password},#{email},null,null,null,null,null,null,#{checkCode})")
     void add(User user);
 
     @Select("select * from management.users where user_id = #{userId}")
     User selectByUserId(int userId);
 
-    @Update("update management.users  set password = #{newPassword}  WHERE account = #{account};")
-    User updatePassword(String account, String newPassword);
+    @Update("update management.users  set password = #{setPassword}  WHERE account = #{account};")
+    User updatePassword(String account, String setPassword);
 
     void updateAll(User user);
 

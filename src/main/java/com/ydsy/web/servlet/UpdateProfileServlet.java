@@ -5,16 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.ydsy.pojo.User;
 import com.ydsy.util.BasicResultVO;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/UpdateProfileServlet")
+@WebServlet("/updateProfileServlet")
 public class UpdateProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,6 +26,7 @@ public class UpdateProfileServlet extends HttpServlet {
             response.setContentType("application/json;charset=utf-8");
             // 创建一个JSON对象来存储用户信息
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", user.getEmail());
             jsonObject.put("name", user.getName());
             jsonObject.put("jobId", user.getJobId());
             jsonObject.put("awards", user.getAwards());
@@ -48,6 +47,7 @@ public class UpdateProfileServlet extends HttpServlet {
             response.getWriter().write(JSON.toJSONString(BasicResultVO.fail("请重新登录")));
         }
     }
+
 
 
     @Override

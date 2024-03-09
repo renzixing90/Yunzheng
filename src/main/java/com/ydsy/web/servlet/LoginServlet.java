@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
@@ -44,8 +46,8 @@ public class LoginServlet extends HttpServlet {
             // 返回成功的 JSON 响应
             response.getWriter().write(JSON.toJSONString(BasicResultVO.success("登录成功")));
             // 重定向到基本 Servlet
-            String contextPath = request.getContextPath();
-            response.sendRedirect(contextPath + "/UpdateProfileServlet");
+            /*String contextPath = request.getContextPath();
+            response.sendRedirect(contextPath + "/UpdateProfileServlet");*/
         } else {
             // 登录失败
             // 返回失败的 JSON 响应
@@ -56,7 +58,6 @@ public class LoginServlet extends HttpServlet {
     // 如果需要处理 GET 请求，可以保留 doGet 方法，但通常登录不需要 GET 请求
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 可以选择处理 GET 请求，或简单地重定向到 POST 请求
-        response.sendRedirect(request.getRequestURI() + "?error=unsupported_method");
+
     }
 }

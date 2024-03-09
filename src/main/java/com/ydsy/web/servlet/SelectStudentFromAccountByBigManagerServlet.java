@@ -47,7 +47,7 @@ public class SelectStudentFromAccountByBigManagerServlet extends HttpServlet {
              * 向前端返回正确
              */
             response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查询到此用户", user)));
+            response.getWriter().write(JSON.toJSONString(BasicResultVO.success("查询到此用户", user01)));
         }
     }
 
