@@ -42,7 +42,7 @@ public class LeaveRequestServlet extends HttpServlet {
          */
         //HttpSession session = request.getSession();
         //User student = (User) session.getAttribute("user");
-        User student = userService.verifyUser("2023004333");
+        User student = userService.verifyUser("2023004444");
 
         /**
          * 假条中的申请人数据存储
@@ -67,8 +67,8 @@ public class LeaveRequestServlet extends HttpServlet {
         if (meetingSelect == 0) {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JSON.toJSONString(BasicResultVO.success("会议不存在", -1)));
+            return;
         }
-
 
         /**
          * 判断此假条是否已经申请过
@@ -77,7 +77,7 @@ public class LeaveRequestServlet extends HttpServlet {
         if (participation != null) {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(JSON.toJSONString(BasicResultVO.success("你已发送过此会议的请假申请", participation)));
-            response.sendRedirect(request.getRequestURI());
+            //response.sendRedirect(request.getRequestURI());
             return;
         }
 
@@ -95,7 +95,7 @@ public class LeaveRequestServlet extends HttpServlet {
         /**
          * 重定向回此界面
          */
-        response.sendRedirect(request.getRequestURI());
+        //response.sendRedirect(request.getRequestURI());
     }
 
     @Override

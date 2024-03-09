@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydsy.mapper.JobApplicationMapper">
+    <resultMap id="JobApplicationsResultMap" type="jobApplication">
+        <result column="job_application_id" property="jobApplicationId"/>
+        <result column="job_applicant_id" property="jobApplicantId"/>
+        <result column="application_job" property="applicationJob"/>
+        <result column="job_approver_id" property="jobApproverId"/>
+        <result column="job_approval_status" property="jobApprovalStatus"/>
+        <result column="job_created_at" property="jobCreatedAt"/>
+    </resultMap>
+    <insert id="insertNeoApplication">
+        insert into job_applications (job_applicant_id, application_job)
+        values (#{jobApplicantId}, #{applicationJob});
+    </insert>
+    <select id="selectAllUntreatedApplications" resultType="com.ydsy.pojo.JobApplication" resultMap="JobApplicationsResultMap">
+        select *
+        from job_applications
+        where job_approval_status = -1;
+    </select>
+
+</mapper>
