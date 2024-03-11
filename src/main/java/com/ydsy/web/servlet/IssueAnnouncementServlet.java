@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 管理员下发通知
+ */
 @WebServlet("/issueAnnouncementServlet")
 public class IssueAnnouncementServlet extends HttpServlet {
 

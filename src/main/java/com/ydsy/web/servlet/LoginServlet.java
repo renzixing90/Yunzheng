@@ -15,6 +15,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 登录
+ */
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
     private UserService service = new UserService();

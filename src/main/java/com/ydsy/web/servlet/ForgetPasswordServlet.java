@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * 忘记密码
+ */
 @WebServlet("/forgetPasswordServlet")
 public class ForgetPasswordServlet extends HttpServlet {
     private UserService service = new UserService();

@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 学员发送请假申请
+ */
 @WebServlet("/leaveRequestServlet")
 public class LeaveRequestServlet extends HttpServlet {
 

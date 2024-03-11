@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 查询自己的个人信息
+ */
 @WebServlet("/selectPersonInformationServlet")
 public class SelectPersonInformationServlet extends HttpServlet {
 

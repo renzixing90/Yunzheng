@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 管理员查看本方向所有的方向请求(功能不对接)
+ */
 @WebServlet("/selectAllDirectionRequestServlet")
 public class SelectAllDirectionRequestServlet extends HttpServlet {
 

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 修改自己的个人信息
+ */
 @WebServlet("/updatePersonInformationServlet")
 public class UpdatePersonInformationServlet extends HttpServlet {
 

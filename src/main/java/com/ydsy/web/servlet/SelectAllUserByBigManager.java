@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 大总管查看所有用户的信息
+ */
 @WebServlet("/selectAllUserByBigManager")
 public class SelectAllUserByBigManager extends HttpServlet {
 

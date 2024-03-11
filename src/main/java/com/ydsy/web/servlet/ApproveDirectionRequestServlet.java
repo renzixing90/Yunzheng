@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 管理员审批本方向的方向申请(功能不对接)
+ */
 @WebServlet("/approveDirectionRequestServlet")
 public class ApproveDirectionRequestServlet extends HttpServlet {
 

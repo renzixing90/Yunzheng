@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 无用接口
+ */
 @WebServlet("/personInformationServlet")
 public class PersonInformationServlet extends HttpServlet {
     @Override

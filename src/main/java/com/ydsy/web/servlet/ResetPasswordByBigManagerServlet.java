@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 大总管重置用户的密码
+ */
 @WebServlet("/resetPasswordByBigManagerServlet")
 public class ResetPasswordByBigManagerServlet extends HttpServlet {
 

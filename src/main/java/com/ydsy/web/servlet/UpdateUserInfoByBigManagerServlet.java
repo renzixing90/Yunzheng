@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 大总管修改学生信息
+ */
 @WebServlet("/updateUserInfoByBigManagerServlet")
 public class UpdateUserInfoByBigManagerServlet extends HttpServlet {
 

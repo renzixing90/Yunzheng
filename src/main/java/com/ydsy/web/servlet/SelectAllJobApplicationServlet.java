@@ -11,6 +11,9 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 大总管查看所有的权限请求(功能不对街)
+ */
 @WebServlet("/selectAllJobApplicationServlet")
 public class SelectAllJobApplicationServlet extends HttpServlet {
 

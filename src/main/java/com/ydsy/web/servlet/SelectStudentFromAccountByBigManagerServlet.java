@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 大总管修改学员个人信息前的通过姓名查找该学员
+ */
 @WebServlet("/selectStudentFromAccountByBigManagerServlet")
 public class SelectStudentFromAccountByBigManagerServlet extends HttpServlet {
 

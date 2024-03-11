@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 生成验证码图片(功能不对接)
+ */
 @WebServlet("/checkCodeServlet")
 public class CheckCodeServlet extends HttpServlet {
     @Override

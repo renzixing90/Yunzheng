@@ -11,6 +11,9 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 管理员查看自己方向的所有学员
+ */
 @WebServlet("/selectAllStudentByManager")
 public class SelectAllStudentByManager extends HttpServlet {
 

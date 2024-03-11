@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 用户发送权限申请(功能不对接)
+ */
 @WebServlet("/jobRequestServlet")
 public class JobRequestServlet extends HttpServlet {
 

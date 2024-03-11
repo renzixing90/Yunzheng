@@ -12,6 +12,9 @@ import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+/**
+ * 注册
+ */
 @WebServlet("/registerServlet")
 public class RegisterServlet extends HttpServlet {
 

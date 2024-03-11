@@ -16,6 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 管理员查询本方向所有的请假请求
+ */
 @WebServlet("/selectAllLeaveRequestServlet")
 public class SelectAllLeaveRequestServlet extends HttpServlet {
 

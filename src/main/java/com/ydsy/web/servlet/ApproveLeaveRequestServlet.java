@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 管理员审批本方向的假条数据
+ */
 @WebServlet("/approveLeaveRequestServlet")
 public class ApproveLeaveRequestServlet extends HttpServlet {
 

@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 学员查看本方向的所有会议内容
+ */
 @WebServlet("/selectAllAnnouncementByDirectionServlet")
 public class SelectAllAnnouncementByDirectionServlet extends HttpServlet {
 

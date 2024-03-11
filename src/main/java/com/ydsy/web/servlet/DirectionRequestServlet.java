@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 用户发送方向请求(功能不对接)
+ */
 @WebServlet("/directionRequestServlet")
 public class DirectionRequestServlet extends HttpServlet {
 

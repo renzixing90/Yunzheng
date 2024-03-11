@@ -14,6 +14,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 注册后的完善信息界面
+ */
 @WebServlet("/updateProfileServlet")
 public class UpdateProfileServlet extends HttpServlet {
 
