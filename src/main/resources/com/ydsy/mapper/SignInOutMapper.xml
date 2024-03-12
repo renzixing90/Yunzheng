@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydsy.mapper.SignInOutMapper">
+    <resultMap id="SignInOutMap" type="signInOut">
+        <result column="sign_id" property="signId"/>
+        <result column="sign_type" property="signType"/>
+        <result column="sign_user_id" property="signUserId"/>
+        <result column="sign_date" property="signDate"/>
+    </resultMap>
+    <insert id="insert">
+        insert sign_in_out (sign_type, sign_user_id, sign_date)
+        VALUES (#{signType}, #{signUserId}, current_date);
+    </insert>
+
+    <select id="selectAllBySignTypeAndSignUserId" resultType="com.ydsy.pojo.SignInOut" resultMap="SignInOutMap">
+        select *
+        from sign_in_out
+        where sign_type = #{signType}
+          and sign_user_id = #{signUserId};
+    </select>
+
+</mapper>

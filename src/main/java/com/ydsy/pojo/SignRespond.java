@@ -9,8 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Job {
-    private int jobId;
-    private String jobName;
-    private int jobCount;
+public class SignRespond {
+    private String userName;
+    private int signInSum;
+    private int signOutSum;
 }

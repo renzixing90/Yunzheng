@@ -1,6 +1,7 @@
 package com.ydsy.service.impl;
 
 import com.ydsy.mapper.UserMapper;
+import com.ydsy.pojo.ManagerRequest;
 import com.ydsy.pojo.User;
 import com.ydsy.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -105,6 +106,11 @@ public class UserService {
         return students;
     }
 
+    /**
+     * 通过name查找用户
+     * @param name
+     * @return
+     */
     public User selectByName(String name) {
         // 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -117,6 +123,11 @@ public class UserService {
 
         return user;
     }
+
+    /**
+     * 更新所有数据
+     * @param user
+     */
     public void updateAll(User user) {
         // 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -129,6 +140,7 @@ public class UserService {
         sqlSession.close();
 
     }
+
     public List<User> selectAll() {
         // 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -142,6 +154,10 @@ public class UserService {
         return users;
     }
 
+    /**
+     * 查找刚刚注册的用户
+     * @return
+     */
     public User selectMaxUser(){
         //2. 获取SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -155,4 +171,35 @@ public class UserService {
         return user;
     }
 
+    /**
+     * 查找某一职务的用户
+     * @param jobId
+     * @return
+     */
+    public List<User> selectByJobId(int jobId) {
+        //2. 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        //3. 获取UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        List<User> users = mapper.selectAllByJobId(jobId);
+
+        sqlSession.close();
+
+        return users;
+    }
+
+    public User selectByManagerRequest(ManagerRequest managerRequest) {
+        //2. 获取SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        //3. 获取UserMapper
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = mapper.selectByManagerRequest(managerRequest);
+
+        sqlSession.close();
+
+        return user;
+
+    }
 }

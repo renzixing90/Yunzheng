@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Job {
-    private int jobId;
-    private String jobName;
-    private int jobCount;
+public class SignInOut {
+    private int signId;
+    private int signType; // 1 签到 2 签退
+    private int signUserId;
+    private LocalDate signDate;
 }

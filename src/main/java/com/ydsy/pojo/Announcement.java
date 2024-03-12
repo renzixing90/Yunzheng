@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +16,5 @@ public class Announcement {
     private int announcementId;
     private int creatorId;
     private String announcementContent;
-    private Timestamp createdAt;
-
-
+    private LocalDateTime createdAt;
 }

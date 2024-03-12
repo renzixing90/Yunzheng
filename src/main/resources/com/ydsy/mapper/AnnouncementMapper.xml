@@ -7,7 +7,7 @@
         <result column="announcement_id" property="announcementId"/>
         <result column="creator_id" property="creatorId"/>
         <result column="announcement_content" property="announcementContent"/>
-        <result column=" created_at" property="createdAt"/>
+        <result column="created_at" property="createdAt"/>
     </resultMap>
     <insert id="insertAll">
         insert into announcements(creator_id, announcement_content)

@@ -14,25 +14,32 @@ CREATE TABLE users
     account            VARCHAR(255)        NOT NULL,   -- 账号，不能为空
     password           VARCHAR(255)        NOT NULL,   -- 密码，不能为空
     email              VARCHAR(255) UNIQUE NOT NULL,   -- 邮箱，唯一且不能为空
-    name               VARCHAR(255)        ,   -- 姓名，不能为空
+    name               VARCHAR(255),                   -- 姓名，不能为空
     job_id             INT,                            -- 职位
     awards             TEXT,                           -- 获奖经历
     personal_signature TEXT,                           -- 个人签名
     student_id         VARCHAR(255),                   -- 学号
     major_class        VARCHAR(255),                   -- 专业班级
     stage              VARCHAR(255),                   -- 期数
-    direction_id       INT                             -- 方向
+    direction_id       INT,                            -- 方向
+    checkCode          varchar(20)
 );
 ALTER TABLE users
     CONVERT TO CHARACTER
         SET utf8;
 -- 转换数据格式
 -- user 实例
-INSERT INTO users (account, password, email,name, job_id, awards, personal_signature, student_id, major_class, stage,
-                   direction_id)
-VALUES ('2023004333', '123456', '22778845@qq.com', '张三', 3, '青鸥奖学金', '好好学习', '2023004333', '软件2333班',
-        '八期', 2),
-       ('2023002222', '13579', '2464181818@qq.com', '李四', 1, '无', '天天向上', '2023002222', '数科2302', '七期', 2);
+INSERT INTO users (account, password, email, name, job_id, awards, personal_signature, student_id, major_class, stage,
+                   direction_id, checkCode)
+VALUES ('2023004333', '123456', '22778845@qq.com', '张三', 1, '青鸥奖学金', '好好学习', '2023004333', '软件2333班',
+        '八期', 2, '2468'),
+       ('2023002222', '13579', '2464181818@qq.com', '李四', 2, '无', '天天向上', '2023002222', '数科2202', '七期', 2,
+        '3456'),
+       ('2023003333', '2468', 'asdf@qq.com', '王五', 3, '无', '我爱学习', '2023003333', '计科2101', '六期', null,
+        '1234'),
+       ('2023004444', '1234', '1234@qq.com', '刘六', 1, '无', '我爱学习', '2023004444', '数科2101', '八期', 2, '1235'),
+       ('2023009876', '122334', '2345@qq.com', '王子', 1, '不知名奖学金', '我不喜欢学习', '2023009876', '计科1203',
+        '八期', 2, '2145');
 
 SET SESSION sql_mode = (SELECT REPLACE
                                (@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));
@@ -103,7 +110,7 @@ ALTER TABLE meetings
         FOREIGN KEY (creator_id) REFERENCES users (user_id) ON DELETE CASCADE;
 -- 实例
 INSERT INTO meetings (meeting_name, creator_id, meeting_content)
-VALUES ('八期成员见面会', 1, '振翅云顶之上，极目星辰大海');
+VALUES ('八期成员见面会', 2, '振翅云顶之上，极目星辰大海');
 --
 --
 --
@@ -160,12 +167,12 @@ VALUES (1, '这是一条公告内容');
 -- 请假情况表 用于存储请假申请和结果 提交申请创建此表内信息,审批后填补审批信息
 CREATE TABLE leave_requests
 (-- 假条表
-    leave_request_id     INT AUTO_INCREMENT PRIMARY KEY, -- 假条id
-    applicant_id         INT       NOT NULL, -- 申请人id
-    leave_request_meeting   INT  NOT NULL, -- 请假时间
-    leave_request_reason VARCHAR(255), -- 请假理由
-    approve_id           INT DEFAULT NULL, -- 批准人id
-    approve_status       INT DEFAULT -1 -- 批准情况 1:批准 0:不批准
+    leave_request_id      INT AUTO_INCREMENT PRIMARY KEY, -- 假条id
+    applicant_id          INT NOT NULL, -- 申请人id
+    leave_request_meeting INT NOT NULL, -- 请假时间
+    leave_request_reason  VARCHAR(255), -- 请假理由
+    approve_id            INT DEFAULT NULL, -- 批准人id
+    approve_status        INT DEFAULT -1 -- 批准情况 1:批准 0:不批准
 
 );
 ALTER TABLE leave_requests
@@ -179,7 +186,8 @@ ALTER TABLE leave_requests -- 将用户表中的用户与假条表中的请假�
     ADD CONSTRAINT fk_leave_requests_meetings FOREIGN KEY (leave_request_meeting) REFERENCES meetings (meeting_id) ON DELETE CASCADE;
 -- 实例
 INSERT INTO leave_requests (applicant_id, leave_request_meeting, leave_request_reason, approve_id, approve_status)
-VALUES (1, 1, '我需要请一天的假去看医生', 2, 1);
+VALUES (1, 1, '我需要请一天的假去看医生', null, -1),
+       (4, 1, '我油饼', null, -1);
 --
 --
 --
@@ -207,3 +215,40 @@ ALTER TABLE direction_applications -- 将用户表中的用户与方向申请情
 -- 实例
 INSERT INTO direction_applications (applicant_id, application_direction, approver_id, approval_status)
 VALUES (1, 2, 2, 1);
+
+-- 职务申请情况表 记录职务的申请情况
+CREATE TABLE job_applications
+(
+    job_application_id  INT AUTO_INCREMENT PRIMARY KEY,        -- 申请ID
+    job_applicant_id    INT NOT NULL,                          -- 申请人ID
+    application_job     INT,                                   -- 申请方向
+    job_approver_id     INT       DEFAULT NULL,                -- 批准人ID
+    job_approval_status INT       DEFAULT - 1,                 -- 批准情况：-1（未审核），1（批准），0（不批准）
+    job_created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- 申请时间
+    FOREIGN KEY (job_applicant_id) REFERENCES users (user_id), -- 外键约束，引用users表的user_id
+    FOREIGN KEY (job_approver_id) REFERENCES users (user_id)   -- 外键约束，引用users表的user_id
+);
+ALTER TABLE job_applications
+    CONVERT TO CHARACTER
+        SET utf8;
+-- 转换数据格式
+ALTER TABLE job_applications -- 将用户表中的用户与职务申请情况表中的申请人建立外键联系
+    ADD CONSTRAINT fk_job_applications_applicant_id_users FOREIGN KEY (job_applicant_id) REFERENCES users (user_id) ON DELETE CASCADE;
+ALTER TABLE job_applications -- 将用户表中的用户与职务申请情况表中的审批人建立外键联系
+    ADD CONSTRAINT fk_job_applications_approver_id_users FOREIGN KEY (job_approver_id) REFERENCES users (user_id) ON DELETE CASCADE;
+-- 实例
+INSERT INTO job_applications (job_applicant_id, application_job, job_approver_id, job_approval_status)
+VALUES (1, 2, 2, 0),
+       (4, 2, 2, -1);
+-- 签到表
+create table sign_in
+(
+    sign_in_id      INT AUTO_INCREMENT PRIMARY KEY,
+    sign_in_user_id INT NOT NULL,
+    sign_in_date    date
+);
+alter table sign_in
+    add constraint fk_sign_in_users foreign key (sign_in_id) references users (user_id) on DELETE cascade;
+-- 实例
+insert into sign_in (sign_in_user_id, sign_in_date)
+values (1, '2024-03-11');

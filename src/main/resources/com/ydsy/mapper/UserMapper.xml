@@ -88,5 +88,17 @@
         from management.users
         where user_id = (select max(user_id) from users);
     </select>
+    <select id="selectAllByJobId" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from users
+        where job_id = #{jobId};
+    </select>
+    <select id="selectByManagerRequest" resultType="com.ydsy.pojo.User" resultMap="usersResultMap">
+        select *
+        from users
+        where name = #{name}
+          and direction_id = #{directionId}
+          and stage = #{stage};
+    </select>
 
 </mapper>

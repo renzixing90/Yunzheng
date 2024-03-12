@@ -1,5 +1,6 @@
 package com.ydsy.mapper;
 
+import com.ydsy.pojo.ManagerRequest;
 import com.ydsy.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -53,16 +54,49 @@ public interface UserMapper {
     @Update("update management.users  set password = #{password}  WHERE account = #{account};")
     int updatePassword(@Param("account") String account, @Param("password") String password);
 
+    /**
+     * 更新所有数据
+     * @param user
+     */
     void updateAll(User user);
 
+    /**
+     * 查看所有用户
+     * @return
+     */
     List<User> selectAll();
 
+    /**
+     * 重置密码更新为123456
+     * @param userId
+     */
     void resetPassword(int userId);
 
+    /**
+     * 查看某一个方向的所有学员
+     * @param directionId
+     * @return
+     */
     List<User> selectAllStuByDirection(int directionId);
 
+    /**
+     * 通过name查找用户
+     * @param name
+     * @return
+     */
     User selectByName(String name);
 
+    /**
+     * 查找id最大的(刚刚注册登入的)用户
+     * @return
+     */
     User selectMaxUser();
 
+    /**
+     * 查看某一职业的所有用户
+     * @return
+     */
+    List<User> selectAllByJobId(int jobId);
+
+    User selectByManagerRequest(ManagerRequest managerRequest);
 }
